@@ -1,0 +1,14 @@
+div.wrapper-button-nav div.garis {
+    height:2px;
+    background:white;
+    width:30px;
+    margin:5px 0;
+}
+
+div.wrapper-button-nav div.garis:nth-child(2) {
+    width:20px;
+}
+
+div.wrapper-button-nav div.garis:nth-child(3) {
+    width:25px;
+}

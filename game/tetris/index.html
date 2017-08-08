@@ -1,0 +1,36 @@
+<html>
+	<head>
+		<title>Tetris</title>
+
+		<link rel="stylesheet" href="css/style.css">
+	</head>
+
+	<body>
+
+		<label id="score">Score: <span>0</span></label>
+
+		<div class="container-flex" id="over">
+			<div class="wrapper">
+				<h1>Game over</h1>
+				<h2 id="score-over">Your score</h2>
+				<button id="restart" class="btn">retry</button>
+			</div>
+		</div>
+
+		<div class="container-flex" id="ready">
+			<div class="wrapper">
+				<h2>Tetris</h2>
+				<button id="playbtn" class="btn">Play</button>
+			</div>
+		</div>
+
+		<canvas id="canvas"></canvas>
+		
+		<script src="js/config.js"></script>
+		<script src="js/Control.js"></script>
+		<script src="js/Game.js"></script>
+		<script src="js/Tetromino.js"></script>
+		<script src="js/Tetris.js"></script>
+		<script src="js/Main.js"></script>
+	</body>
+</html>

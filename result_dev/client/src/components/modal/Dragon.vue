@@ -4,7 +4,7 @@
             <div class="wrapper-game col-xs-12 col-md-8 col-lg-8">
                 <div class="wrapper-play" v-show="!playing || over">
                     <label v-if="over" class="score">
-                        Your score: {{ game.tetris.score }}
+                        Your score: {{ game.score }}
                     </label>
                     <button class="btn-play" @click="startPlay">
                         <span v-if="over">retry</span>
@@ -12,7 +12,7 @@
                     </button>
                 </div>
 
-                <canvas v-show="playing && !over" id="canvas" width="500" height="750"></canvas>
+                <canvas v-show="playing && !over" id="canvas-dragon" width="800" height="480"></canvas>
             </div>
 
             <div class="board-score col-xs-12 col-md-4 col-lg-4">
@@ -34,25 +34,30 @@
 <script>
     import scoreService from '@/services/score.service';
 
-    import * as game from '../../assets/js/Tetris';
+    import * as dragon from '../../assets/js/new';
 
     export default {
         data() {
             return {
-                type: 'tetris',
+                type: 'dragon',
                 highscores: [],
                 playing: false,
-                over: false,
-                game: game.game
+                game: dragon.game,
+                over: false
             }
         },
         created() {
-            this.getHighScore();
+            this.getHighScores();
         },
         mounted() {
-            let canvas = document.getElementById("canvas");
+            let canvas = document.getElementById("canvas-dragon");
 
-            game.game.setCanvas(canvas);
+            dragon.game.setCanvas(canvas);
+            dragon.game.setBackground();
+
+            canvas.addEventListener("click", (e) => {
+                dragon.game.dragon.goUp();
+            });
         },
         watch: {
             game: {
@@ -63,14 +68,29 @@
             }
         },
         methods: {
-            getHighScore() {
+            getHighScores() {
                 scoreService.getHighScore(this.type)
                     .then((response) => {
                         this.highscores = response.data.data.items;
                     });
             },
+            saveScore() {
+                let data = {
+                    score: this.game.score,
+                    type: this.type
+                };
+
+                scoreService.saveScore(data)
+                    .then((response) => {
+                        this.over = true;
+                        this.getHighScores();
+                    })
+            },
             closeModal() {
-                this.game.clear();
+                this.game.reset();
+                this.game.loop = false;
+                this.game.started = false;
+
                 this.playing = false;
                 this.over = false;
 
@@ -80,25 +100,24 @@
                 this.playing = true;
                 this.over = false;
 
-                game.game.init();
-            },
-            saveScore() {
-                let data = {
-                    type: this.type,
-                    score: this.game.tetris.score
-                };
-
-                scoreService.saveScore(data)
-                    .then((response) => {
-                        this.over = true;
-                        this.getHighScore();
-                    });
+                dragon.startGame();
             }
         }
     }
 </script>
 
 <style>
+    div.wrapper-play {
+        text-align:center;
+    }
+
+    label.score {
+        width:100%;
+        display:block;
+        font-weight:bold;
+        font-size:24px;
+        margin-bottom:10px;
+    }
     div.modal div.container-game {
         padding:0;
         display:flex;

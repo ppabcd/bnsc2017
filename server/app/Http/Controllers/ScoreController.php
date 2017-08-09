@@ -20,6 +20,7 @@ class ScoreController extends Controller
         $highScores = $this->score->where('type','=', $type)
                                   ->orderBy('score', 'DESC')
                                   ->limit(10)
+                                  ->with('user')
                                   ->get();
 
         return response()->json([

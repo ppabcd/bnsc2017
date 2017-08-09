@@ -5,15 +5,15 @@
                 <img src="./../../assets/images/logo_inverse.png" alt="logo inverse">
             </div>
 
-            <form class="form">
+            <form class="form" @submit.prevent="login">
                 <div class="form-group">
                     <label class="control-label">E-mail Address</label>
-                    <input type="email" class="form-control" placeholder="Your e-mail">
+                    <input type="email" class="form-control" placeholder="Your e-mail" v-model="form.email">
                 </div>
 
                 <div class="form-group">
                     <label class="control-label">Password</label>
-                    <input type="password" class="form-control" placeholder="Your password here">
+                    <input type="password" class="form-control" placeholder="Your password here" v-model="form.password">
                 </div>
 
                 <div class="form-group">
@@ -30,13 +30,37 @@
             </form>
         </div>
 
-        <div class="close">Close</div>
+        <div class="close" @click="closeModal">Close</div>
     </div>
 </template>
 
 <script>
-    export default {
+    import authService from '@/services/auth.service';
 
+    export default {
+        data() {
+            return {
+                form: {
+                    email: '',
+                    password: ''
+                }
+            }
+        },
+        methods: {
+            login() {
+                authService.login(this.form)
+                    .then((response) => {
+                        if(response.data.data.token) {
+                            localStorage.setItem("token", response.data.data.token);
+
+                            this.$emit('loginSuccess');
+                        }
+                    });
+            },
+            closeModal() {
+                this.$emit('closeModal');
+            }
+        }
     }
 </script>
 

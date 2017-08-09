@@ -59,7 +59,7 @@
             </form>
         </div>
 
-        <div class="close">Close</div>
+        <div class="close" @click="closeModal">Close</div>
     </div>
 </template>
 
@@ -100,8 +100,15 @@
             register() {
                 registerService.register(this.form)
                     .then((response) => {
-                        console.log(response);
+                        if(response.data.data.token) {
+                            localStorage.setItem("token", response.data.data.token);
+
+                            this.$emit('registerSuccess');
+                        }
                     });
+            },
+            closeModal() {
+                this.$emit('closeModal');
             }
         }
     }

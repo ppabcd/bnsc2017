@@ -5,16 +5,19 @@
                 <img src="./../assets/images/logo.png" alt="Logo sidebar">
             </div>
 
-            <ul>
-                <li class="register">
+            <ul v-if="!loggedIn">
+                <li class="register" @click="registerActive = true">
                     <i class="fa fa-user-plus fa-2x"></i>
                     <span>Register</span>
                 </li>
-                <li class="login">
+                <li class="login" @click="loginActive = true">
                     <i class="fa fa-sign-in fa-2x"></i>
                     <span>Log In</span>
                 </li>
             </ul>
+            <label v-else>
+                {{ username }}
+            </label>
         </div>
 
         <!-- RESPONSIVE NAV BAR -->
@@ -125,7 +128,7 @@
 
                         <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
                             <div class="container-button-join">
-                                <button class="btn-ghost join-us">
+                                <button class="btn-ghost join-us" @click="registerActive = true">
                                     join us
                                 </button>
                             </div>
@@ -310,8 +313,18 @@
             </footer>
         </div>
 
-        <modal-register></modal-register>
-        <modal-login></modal-login>
+        <modal-register
+            :class="{ active: registerActive }"
+            @closeModal="registerActive = false"
+            @registerSuccess="getUserData">
+        </modal-register>
+
+        <modal-login
+            :class="{ active: loginActive }"
+            @closeModal="loginActive = false"
+            @loginSuccess="getUserData">
+        </modal-login>
+
         <modal-game></modal-game>
     </div>
 </template>
@@ -321,11 +334,51 @@
     import Login from './modal/Login.vue';
     import Game from './modal/Game.vue';
 
+    import authService from '@/services/auth.service';
+
     export default {
         components: {
             'modal-register': Register,
             'modal-login': Login,
             'modal-game': Game
+        },
+        data() {
+            return {
+                registerActive: false,
+                loginActive: false,
+                loggedIn: false,
+                username: ''
+            }
+        },
+        created() {
+            this.checkAuth();
+        },
+        methods: {
+            checkAuth() {
+                authService.validateToken()
+                    .then((response) => {
+                        if(response.status === 200) {
+                            if(response.data.authenticated) {
+                                this.loggedIn = true;
+
+                                this.getUserData();
+                            }
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("NOT AUTHENTICATED!!!");
+                    });
+            },
+            getUserData() {
+                this.loggedIn = true;
+                authService.profile()
+                    .then((response) => {
+                        this.username = response.data.data.user.username;
+                    })
+                    .catch((error) => {
+                        console.error(error, "ERROR!!!");
+                    });
+            }
         }
     }
 </script>

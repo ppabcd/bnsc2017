@@ -7,18 +7,27 @@ use App\Http\Requests\RegisterRequest;
 use App\User;
 
 use JWTAuth;
+use File;
+
+use App\Services\Base64;
 
 class RegisterController extends Controller
 {
     private $user;
+    private $base64;
 
-    public function __construct(User $user) {
+    public function __construct(User $user, Base64 $base64) {
         $this->user = $user;
+        $this->base64 = $base64;
     }
 
     public function register(RegisterRequest $request) {
-        $file = $request->file('profile_picture');
-        $path = $file->store('avatars');
+        // upload image
+        $image = $this->base64->convertToImage($request['profile_picture']);
+
+        $imagePath = "avatars/" . $image['name'];
+
+        File::put($imagePath, $image['image']);
 
         $params = [
             'name' => $request['name'],
@@ -27,7 +36,7 @@ class RegisterController extends Controller
             'password' => bcrypt($request['password']),
             'date_of_birth' => $request['date_of_birth'],
             'phone_number' => $request['phone_number'],
-            'profile_picture' => $path
+            'profile_picture' => $imagePath
         ];
 
         try {

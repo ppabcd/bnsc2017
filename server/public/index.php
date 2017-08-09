@@ -1,5 +1,6 @@
 <?php
 
+header("Access-Control-Allow-Origin: http://localhost:8080");
 header("Access-Control-Allow-Methods: GET, POST, PATCH, DELETE");
 header("Access-Control-Allow-Headers: Origin, Authorization, X-Auth-Token, Content-Type");
 header("Access-Control-Expose-Headers: Authorization, Content-Type");

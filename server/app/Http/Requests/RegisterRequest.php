@@ -30,7 +30,7 @@ class RegisterRequest extends FormRequest
             'password' => 'required',
             'date_of_birth' => 'required|date',
             'phone_number' => 'required',
-            'profile_picture' => 'file|required|max:1000'
+            'profile_picture' => 'required'
         ];
     }
 }

@@ -2,21 +2,21 @@
     <div class="modal modal-game">
         <div class="container-modal container-game">
             <div class="wrapper-game col-xs-12 col-md-8 col-lg-8">
-                <div class="wrapper-play">
-                    <button class="btn-play">
+                <div class="wrapper-play" v-show="!playing">
+                    <button class="btn-play" @click="startPlay">
                         play
                     </button>
                 </div>
 
-                <canvas id="dragon" width="800" height="400"></canvas>
+                <canvas v-show="playing" id="canvas" width="500" height="750"></canvas>
             </div>
 
             <div class="board-score col-xs-12 col-md-4 col-lg-4">
                 <h3>High Score</h3>
 
                 <div class="scores" v-if="highscores.length > 0">
-                    <div class="score" v-for="highscore in highscores">
-                        <label class="left">1. {{ highscore.user.username }}</label>
+                    <div class="score" v-for="(highscore, k) in highscores">
+                        <label class="left">{{ (k+1) }}. {{ highscore.user.username }}</label>
                         <label class="right">{{ highscore.score }}</label>
                     </div>
                 </div>
@@ -30,25 +30,59 @@
 <script>
     import scoreService from '@/services/score.service';
 
+    import * as game from '../../assets/js/Tetris';
+
     export default {
-        props: ['type'],
         data() {
             return {
-                highscores: []
+                type: 'tetris',
+                highscores: [],
+                playing: false,
+                game: game.game
             }
         },
         created() {
-            this.getHighScore(this.type);
+            this.getHighScore();
+        },
+        mounted() {
+            let canvas = document.getElementById("canvas");
+
+            game.game.setCanvas(canvas);
+        },
+        watch: {
+            game: {
+                handler: function(val, oldVal) {
+                    if(val.lost) this.saveScore();
+                },
+                deep: true
+            }
         },
         methods: {
-            getHighScore(type) {
-                scoreService.getHighScore(type)
+            getHighScore() {
+                scoreService.getHighScore(this.type)
                     .then((response) => {
                         this.highscores = response.data.data.items;
                     });
             },
             closeModal() {
                 this.$emit('closeModal');
+            },
+            startPlay() {
+                this.playing = true;
+
+                game.game.init();
+            },
+            saveScore() {
+                let data = {
+                    type: this.type,
+                    score: this.game.tetris.score
+                };
+
+                scoreService.saveScore(data)
+                    .then((response) => {
+                        this.getHighScore(this.type);
+                        this.playing = false;
+                    });
             }
         }
     }
@@ -92,7 +126,7 @@
 
     div.modal div.container-game div.wrapper-game canvas {
         background:#ccc;
-        display:none;
+        /*display:none;*/
     }
 
     div.modal div.container-game div.board-score {

@@ -325,24 +325,23 @@
             @loginSuccess="getUserData">
         </modal-login>
 
-        <modal-game
-            type="dragon"
-            :class="{ active: dragonActive }"
-            @closeModal="dragonActive = false"
-        ></modal-game>
+        <dragon
+            :class="{active: dragonActive}"
+            @closeModal="dragonActive = false">
+        </dragon>
 
-        <modal-game
-            type="tetris"
+        <tetris
             :class="{ active: tetrisActive }"
             @closeModal="tetrisActive = false">
-        </modal-game>
+        </tetris>
     </div>
 </template>
 
 <script>
     import Register from './modal/Register.vue';
     import Login from './modal/Login.vue';
-    import Game from './modal/Game.vue';
+    import Tetris from './modal/Tetris.vue';
+    import Dragon from './modal/Dragon.vue';
 
     import authService from '@/services/auth.service';
 
@@ -350,7 +349,8 @@
         components: {
             'modal-register': Register,
             'modal-login': Login,
-            'modal-game': Game,
+            'tetris': Tetris,
+            'dragon': Dragon
         },
         data() {
             return {

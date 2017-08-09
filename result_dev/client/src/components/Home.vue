@@ -61,7 +61,7 @@
                             <p>
                                 Play this endless runner game to be a true survival!
                             </p>
-                            <button class="btn-ghost play-game">
+                            <button class="btn-ghost" @click="dragonActive = true">
                                 Play
                             </button>
                         </div>
@@ -77,7 +77,7 @@
                             <p>
                                 Beat other's highscore to be the best on Tetris
                             </p>
-                            <button class="btn-ghost play-game">
+                            <button class="btn-ghost" @click="tetrisActive = true">
                                 Play
                             </button>
                         </div>
@@ -325,7 +325,17 @@
             @loginSuccess="getUserData">
         </modal-login>
 
-        <modal-game></modal-game>
+        <modal-game
+            type="dragon"
+            :class="{ active: dragonActive }"
+            @closeModal="dragonActive = false"
+        ></modal-game>
+
+        <modal-game
+            type="tetris"
+            :class="{ active: tetrisActive }"
+            @closeModal="tetrisActive = false">
+        </modal-game>
     </div>
 </template>
 
@@ -340,12 +350,14 @@
         components: {
             'modal-register': Register,
             'modal-login': Login,
-            'modal-game': Game
+            'modal-game': Game,
         },
         data() {
             return {
                 registerActive: false,
                 loginActive: false,
+                dragonActive: false,
+                tetrisActive: false,
                 loggedIn: false,
                 username: ''
             }
@@ -378,7 +390,7 @@
                     .catch((error) => {
                         console.error(error, "ERROR!!!");
                     });
-            }
+            },
         }
     }
 </script>

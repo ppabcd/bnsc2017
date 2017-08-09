@@ -14,66 +14,44 @@
             <div class="board-score col-xs-12 col-md-4 col-lg-4">
                 <h3>High Score</h3>
 
-                <div class="scores">
-                    <div class="score">
-                        <label class="left">1. Yoksan Herlie</label>
-                        <label class="right">280</label>
-                    </div>
-
-                    <div class="score">
-                        <label class="left">2. Yoksan Herlie</label>
-                        <label class="right">280</label>
-                    </div>
-
-                    <div class="score">
-                        <label class="left">3. Yoksan Herlie</label>
-                        <label class="right">280</label>
-                    </div>
-
-                    <div class="score">
-                        <label class="left">4. Yoksan Herlie</label>
-                        <label class="right">280</label>
-                    </div>
-
-                    <div class="score">
-                        <label class="left">5. Yoksan Herlie</label>
-                        <label class="right">280</label>
-                    </div>
-
-                    <div class="score">
-                        <label class="left">6. Yoksan Herlie</label>
-                        <label class="right">280</label>
-                    </div>
-
-                    <div class="score">
-                        <label class="left">7. Yoksan Herlie</label>
-                        <label class="right">280</label>
-                    </div>
-
-                    <div class="score">
-                        <label class="left">8. Yoksan Herlie</label>
-                        <label class="right">280</label>
-                    </div>
-
-                    <div class="score">
-                        <label class="left">9. Yoksan Herlie</label>
-                        <label class="right">280</label>
-                    </div>
-
-                    <div class="score">
-                        <label class="left">10. Yoksan Herlie</label>
-                        <label class="right">280</label>
+                <div class="scores" v-if="highscores.length > 0">
+                    <div class="score" v-for="highscore in highscores">
+                        <label class="left">1. {{ highscore.user.username }}</label>
+                        <label class="right">{{ highscore.score }}</label>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="close">Close</div>
+        <div class="close" @click="closeModal">Close</div>
     </div>
 </template>
 
 <script>
+    import scoreService from '@/services/score.service';
 
+    export default {
+        props: ['type'],
+        data() {
+            return {
+                highscores: []
+            }
+        },
+        created() {
+            this.getHighScore(this.type);
+        },
+        methods: {
+            getHighScore(type) {
+                scoreService.getHighScore(type)
+                    .then((response) => {
+                        this.highscores = response.data.data.items;
+                    });
+            },
+            closeModal() {
+                this.$emit('closeModal');
+            }
+        }
+    }
 </script>
 
 <style>

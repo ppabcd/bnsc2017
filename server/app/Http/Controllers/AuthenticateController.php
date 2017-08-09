@@ -4,27 +4,45 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
 
+use App\Services\CaptchaService;
 use JWTAuth;
 
 class AuthenticateController extends Controller
 {
+    private $captchaService;
+
+    public function __construct(CaptchaService $captchaService) {
+        $this->captchaService = $captchaService;
+    }
     public function login(LoginRequest $request) {
-        $credentials = $request->only('email', 'password');
+        $captcha = $request['captcha'];
 
-        try {
-            if(! $token = JWTAuth::attempt($credentials)) {
-                return response()->json(['error' => 'invalid_credentials'], 401);
+        if($this->captchaService->validate($captcha['data'], $captcha['captcha'])) {
+
+            $credentials = $request->only('email', 'password');
+
+            try {
+                if(! $token = JWTAuth::attempt($credentials)) {
+                    return response()->json(['error' => 'invalid_credentials'], 401);
+                }
+            } catch (JWTException $e) {
+                return response()->json(['error' => 'could_not_create_token'], 500);
             }
-        } catch (JWTException $e) {
-            return response()->json(['error' => 'could_not_create_token'], 500);
-        }
 
-        return response()->json([
-            'apiVersion' => '1.0',
-            'data' => [
-                'token' => $token
-            ]
-        ], 200);
+            return response()->json([
+                'apiVersion' => '1.0',
+                'data' => [
+                    'token' => $token
+                ]
+            ], 200);
+        }else {
+            return response()->json([
+                'apiVersion' => '1.0',
+                'data' => [
+                    'message' => 'Invalid captcha'
+                ]
+            ], 400);
+        }
     }
 
     public function logout() {

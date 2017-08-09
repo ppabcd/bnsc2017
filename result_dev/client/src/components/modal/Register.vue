@@ -48,7 +48,7 @@
                 <div class="form-group">
                     <label class="control-label">Captcha</label>
                     <canvas class="captcha" id="canvas-captcha">Browser don't support canvas</canvas>
-                    <input type="text" class="form-control" placeholder="Captcha" v-model="form.captcha">
+                    <input type="text" class="form-control" placeholder="Captcha" v-model="form.captcha.captcha">
                 </div>
 
                 <div class="form-group">
@@ -77,7 +77,10 @@
                     password: '',
                     date_of_birth: '',
                     phone_number: '',
-                    captcha: '',
+                    captcha: {
+                        captcha: '',
+                        data: ''
+                    },
                     profile_picture: ''
                 },
                 captchaData: '',
@@ -116,12 +119,15 @@
                         this.error = {
                             test: 'ganteng'
                         }
+                        console.log("ERROR BLAHAU");
+                        console.log(error);
                     });
             },
             getCaptcha() {
                 captchaService.getCaptcha()
                     .then((response) => {
                         this.captchaData = response.data.data.captcha;
+                        this.form.captcha.data = this.captchaData.id;
 
                         this.drawCaptcha();
                     });

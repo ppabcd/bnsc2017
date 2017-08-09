@@ -18,8 +18,8 @@
 
                 <div class="form-group">
                     <label class="control-label">Captcha</label>
-                    <canvas class="captcha"></canvas>
-                    <input type="text" class="form-control" placeholder="Captcha">
+                    <canvas class="captcha" id="captcha-login"></canvas>
+                    <input type="text" class="form-control" placeholder="Captcha" v-model="form.captcha.captcha">
                 </div>
 
                 <div class="form-group">
@@ -37,14 +37,24 @@
 <script>
     import authService from '@/services/auth.service';
 
+    import captchaService from '@/services/captcha.service';
+
     export default {
         data() {
             return {
                 form: {
                     email: '',
-                    password: ''
-                }
+                    password: '',
+                    captcha: {
+                        captcha: '',
+                        data: ''
+                    }
+                },
+                captchaData: { }
             }
+        },
+        created() {
+            this.getCaptcha();
         },
         methods: {
             login() {
@@ -55,7 +65,52 @@
 
                             this.$emit('loginSuccess');
                         }
+                    })
+                    .catch((error) => {
+                        console.error("CAPTCHA AUTIS");
                     });
+            },
+            getCaptcha() {
+                captchaService.getCaptcha()
+                    .then((response) => {
+                        this.captchaData = response.data.data.captcha;
+                        this.form.captcha.data = this.captchaData.id;
+
+                        this.drawCaptcha();
+                    });
+            },
+            drawCaptcha() {
+                let canvas = document.getElementById("captcha-login"),
+                    ctx = canvas.getContext('2d');
+
+                canvas.width = 504;
+                canvas.height = 80;
+
+                for(let i = 0; i < this.captchaData.captcha.length; i++) {
+                    this._draw(ctx, {
+                        v: this.captchaData.captcha[i],
+                        x: i * 80 + 80,
+                        y: canvas.height / 2 + 10,
+                        opacity: Math.ceil(Math.random() * 10) / 10,
+                        rotate: Math.floor(Math.random() * 90) - 45
+                    });
+                }
+            },
+            _draw(ctx, opt) {
+                ctx.save();
+
+                ctx.globalAlpha = opt.opacity;
+                ctx.translate(opt.x + 10, opt.y + 10);
+                ctx.rotate(opt.rotate * Math.PI / 180);
+                ctx.translate(-10, -10);
+
+                ctx.font = "40px Arial";
+
+                ctx.fillText(opt.v, 0, 0);
+
+                ctx.globalAlpha = 1;
+
+                ctx.restore();
             },
             closeModal() {
                 this.$emit('closeModal');

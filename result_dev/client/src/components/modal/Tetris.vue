@@ -37,6 +37,7 @@
     import * as game from '../../assets/js/Tetris';
 
     export default {
+        props: ['opened'],
         data() {
             return {
                 type: 'tetris',
@@ -60,6 +61,9 @@
                     if(val.lost) this.saveScore();
                 },
                 deep: true
+            },
+            opened: function(opened) {
+                if(opened) this.getHighScore();
             }
         },
         methods: {

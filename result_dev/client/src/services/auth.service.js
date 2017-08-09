@@ -5,6 +5,11 @@ export default {
     login(data) {
         return api.post('auth/login', data);
     },
+    logout() {
+        let headers = http.prepareAuthHeader(localStorage.getItem("token"));
+
+        return api.get('auth/logout', { headers: headers });
+    },
     validateToken() {
         let headers = http.prepareAuthHeader(localStorage.getItem("token"));
 

@@ -5,6 +5,12 @@
                 <img src="./../../assets/images/logo_inverse.png" alt="logo inverse">
             </div>
 
+            <div class="alert" v-if="error">
+                {{ errorMsg }}
+
+                <span @click="error = false">x</span>
+            </div>
+
             <form class="form" @submit.prevent="login">
                 <div class="form-group">
                     <label class="control-label">E-mail Address</label>
@@ -50,7 +56,9 @@
                         data: ''
                     }
                 },
-                captchaData: { }
+                captchaData: { },
+                error: false,
+                errorMsg: ''
             }
         },
         created() {
@@ -63,12 +71,33 @@
                         if(response.data.data.token) {
                             localStorage.setItem("token", response.data.data.token);
 
+                            this.reset();
+
                             this.$emit('loginSuccess');
                         }
                     })
                     .catch((error) => {
-                        console.error("CAPTCHA AUTIS");
+                        if(error.response.status === 400) {
+                            this.errorMsg = error.response.data.data.message;
+                        }else if(error.response.status === 401) {
+                            this.errorMsg = "Invalid credentials";
+                        }else {
+                            this.errorMsg = "Validation error";
+                        }
+
+                        this.error = true;
                     });
+            },
+            reset() {
+                this.form.email = '';
+                this.form.password = '';
+                this.form.captcha.captcha = '';
+                this.form.captcha.data = '';
+                this.captchaData = { };
+                this.error = false;
+                this.errorMsg = false;
+
+                this.getCaptcha();
             },
             getCaptcha() {
                 captchaService.getCaptcha()
@@ -119,4 +148,17 @@
     }
 </script>
 
-<style></style>
+<style>
+    div.alert {
+        background:rgba(255, 56, 99, .3);
+        border:1px solid rgba(255, 56, 99, .3);
+        color:#ff3860;
+        padding:8px 12px;
+        margin-bottom:10px;
+    }
+
+    div.alert span {
+        float:right;
+        cursor:pointer;
+    }
+</style>

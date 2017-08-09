@@ -6,7 +6,9 @@
             </div>
 
             <div class="alert" v-if="error">
-                Register to fail. Please try again
+                {{ errorMsg }}
+
+                <span @click="error = false">x</span>
             </div>
 
             <form class="form" @submit.prevent="register">
@@ -84,7 +86,8 @@
                     profile_picture: ''
                 },
                 captchaData: '',
-                error: { }
+                error: false,
+                errorMsg: ''
             }
         },
         created() {
@@ -116,11 +119,14 @@
                         }
                     })
                     .catch((error) => {
-                        this.error = {
-                            test: 'ganteng'
+                        if(error.response.status === 400) {
+                            this.errorMsg = error.response.data.data.message;
+                        }else {
+                            this.errorMsg = "Validation error";
                         }
-                        console.log("ERROR BLAHAU");
-                        console.log(error);
+
+                        this.error = true;
+
                     });
             },
             getCaptcha() {
@@ -173,5 +179,16 @@
 </script>
 
 <style>
+    div.alert {
+        background:rgba(255, 56, 99, .3);
+        border:1px solid rgba(255, 56, 99, .3);
+        color:#ff3860;
+        padding:8px 12px;
+        margin-bottom:10px;
+    }
 
+    div.alert span {
+        float:right;
+        cursor:pointer;
+    }
 </style>

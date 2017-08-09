@@ -62,7 +62,7 @@ class RegisterController extends Controller
             return response()->json([
                 'apiVersion' => "1.0",
                 'data' => [
-                    'message' => 'Captcha invalid'
+                    'message' => 'Invalid captcha'
                 ]
             ], 400);
         }

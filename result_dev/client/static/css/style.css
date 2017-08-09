@@ -29,9 +29,12 @@ div#sidebar ul {
     min-width:300px;
 }
 
+div#sidebar ul li:first-child {
+    border-top:1px solid #7A27E5;
+}
+
 div#sidebar ul li {
     color:white;
-    border-bottom:1px solid #aaa;
     padding:20px 0 20px 20px;
     font-size:18px;
     transition:all .4s;
@@ -60,6 +63,32 @@ div#sidebar div.container-logo {
 div#sidebar div.container-logo img {
     width:52px;
     height:52px;
+}
+
+div#sidebar li.container-user {
+    display:flex;
+    align-items:center;
+}
+
+div#sidebar li.container-user span {
+    position:relative;
+    top:0;
+}
+
+div#sidebar div.wrapper-image-user{
+    width:52px;
+    height:52px;
+    border-radius:50%;
+    overflow:hidden;
+    position:relative;
+    left:-5px;
+    margin-right:10px;
+}
+
+div#sidebar div.wrapper-image-user img {
+    width:100%;
+    height:100%;
+    object-fit:cover;
 }
 
 /* CONTENT */

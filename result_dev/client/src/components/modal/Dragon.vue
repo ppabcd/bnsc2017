@@ -37,6 +37,7 @@
     import * as dragon from '../../assets/js/new';
 
     export default {
+        props: ['opened'],
         data() {
             return {
                 type: 'dragon',
@@ -47,7 +48,7 @@
             }
         },
         created() {
-            this.getHighScores();
+            this.getHighScore();
         },
         mounted() {
             let canvas = document.getElementById("canvas-dragon");
@@ -65,10 +66,13 @@
                     if(val.lost) this.saveScore();
                 },
                 deep: true
+            },
+            opened: function(opened) {
+                if(opened) this.getHighScore();
             }
         },
         methods: {
-            getHighScores() {
+            getHighScore() {
                 scoreService.getHighScore(this.type)
                     .then((response) => {
                         this.highscores = response.data.data.items;
@@ -83,7 +87,7 @@
                 scoreService.saveScore(data)
                     .then((response) => {
                         this.over = true;
-                        this.getHighScores();
+                        this.getHighScore();
                     })
             },
             closeModal() {

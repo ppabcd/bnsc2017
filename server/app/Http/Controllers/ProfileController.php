@@ -12,6 +12,7 @@ class ProfileController extends Controller
         return response()->json([
             'apiVersion' => '1.0',
             'data' => [
+                'image_path' => asset('/'),
                 'user' => $user
             ]
         ], 200);

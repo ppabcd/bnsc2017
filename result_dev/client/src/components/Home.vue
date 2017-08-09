@@ -5,7 +5,7 @@
                 <img src="./../assets/images/logo.png" alt="Logo sidebar">
             </div>
 
-            <ul v-if="!loggedIn">
+            <ul v-show="!loggedIn">
                 <li class="register" @click="registerActive = true">
                     <i class="fa fa-user-plus fa-2x"></i>
                     <span>Register</span>
@@ -15,9 +15,20 @@
                     <span>Log In</span>
                 </li>
             </ul>
-            <label v-else>
-                {{ username }}
-            </label>
+
+            <ul v-show="loggedIn">
+                <li class="container-user">
+                    <div class="wrapper-image-user">
+                        <img :src="image" />
+                    </div>
+
+                    <span>{{ username }}</span>
+                </li>
+                <li @click="logout">
+                    <i class="fa fa-sign-out fa-2x"></i>
+                    <span>Log Out</span>
+                </li>
+            </ul>
         </div>
 
         <!-- RESPONSIVE NAV BAR -->
@@ -61,7 +72,7 @@
                             <p>
                                 Play this endless runner game to be a true survival!
                             </p>
-                            <button class="btn-ghost" @click="dragonActive = true">
+                            <button class="btn-ghost" @click="playDragon">
                                 Play
                             </button>
                         </div>
@@ -77,7 +88,7 @@
                             <p>
                                 Beat other's highscore to be the best on Tetris
                             </p>
-                            <button class="btn-ghost" @click="tetrisActive = true">
+                            <button class="btn-ghost" @click="playTetris">
                                 Play
                             </button>
                         </div>
@@ -326,11 +337,13 @@
         </modal-login>
 
         <dragon
+            :opened="openDragon"
             :class="{active: dragonActive}"
             @closeModal="dragonActive = false">
         </dragon>
 
         <tetris
+            :opened="openTetris"
             :class="{ active: tetrisActive }"
             @closeModal="tetrisActive = false">
         </tetris>
@@ -359,7 +372,10 @@
                 dragonActive: false,
                 tetrisActive: false,
                 loggedIn: false,
-                username: ''
+                username: '',
+                image: '',
+                openTetris: false,
+                openDragon: false
             }
         },
         created() {
@@ -382,15 +398,46 @@
                     });
             },
             getUserData() {
-                this.loggedIn = true;
                 authService.profile()
                     .then((response) => {
-                        this.username = response.data.data.user.username;
+                        let user = response.data.data.user;
+
+                        this.username = user.username;
+
+                        this.image = response.data.data.image_path + user.profile_picture;
+
+                        this.loggedIn = true;
+
+                        this.loginActive = false;
+                        this.registerActive = false;
                     })
                     .catch((error) => {
-                        console.error(error, "ERROR!!!");
+                        console.error("Error getting user data!");
                     });
             },
+            playDragon() {
+                if(this.loggedIn) {
+                    this.openDragon = true;
+                    this.dragonActive = true;
+                }
+                else this.loginActive = true;
+            },
+            playTetris() {
+                if(this.loggedIn) {
+                    this.openTetris = true;
+                    this.tetrisActive = true;
+                }
+                else this.loginActive = true;
+            },
+            logout() {
+                authService.logout()
+                    .then((response) => {
+                        this.loggedIn = false;
+                        this.username = '';
+                        this.image = '';
+                        localStorage.removeItem("token");
+                    });
+            }
         }
     }
 </script>

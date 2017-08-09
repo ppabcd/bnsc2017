@@ -21,6 +21,7 @@ Route::group(['prefix' => 'users', 'middleware' => 'jwt.auth'], function() {
     Route::get('{id}', 'UserController@index');
     Route::patch('{id}', 'UserController@update');
 });
+Route::get('profile', 'ProfileController@index');
 
 // auth
 Route::post('auth/login', 'AuthenticateController@login');

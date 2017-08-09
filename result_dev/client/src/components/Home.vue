@@ -309,11 +309,23 @@
                 <div class="overlay"></div>
             </footer>
         </div>
+
+        <modal-register></modal-register>
+        <modal-login></modal-login>
+        <modal-game></modal-game>
     </div>
 </template>
 
 <script>
-    export default {
+    import Register from './modal/Register.vue';
+    import Login from './modal/Login.vue';
+    import Game from './modal/Game.vue';
 
+    export default {
+        components: {
+            'modal-register': Register,
+            'modal-login': Login,
+            'modal-game': Game
+        }
     }
 </script>

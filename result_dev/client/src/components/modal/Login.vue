@@ -1,6 +1,6 @@
 <template>
     <div class="modal modal-login">
-        <div class="container-modal container-register">
+        <div :class="['container-modal', 'container-register', { 'error' : error }]">
             <div class="container-logo">
                 <img src="./../../assets/images/logo_inverse.png" alt="logo inverse">
             </div>
@@ -58,7 +58,8 @@
                 },
                 captchaData: { },
                 error: false,
-                errorMsg: ''
+                errorMsg: '',
+                errorClass: ''
             }
         },
         created() {
@@ -66,6 +67,7 @@
         },
         methods: {
             login() {
+                this.error = false;
                 authService.login(this.form)
                     .then((response) => {
                         if(response.data.data.token) {

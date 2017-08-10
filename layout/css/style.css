@@ -1,6 +1,6 @@
 * {
     box-sizing:border-box;
-    font-family:"Raleway";
+    font-family:"RalewayRegular";
     outline:0;
 }
 
@@ -79,6 +79,7 @@ div.header-content h2.judul {
     text-transform:uppercase;
     font-size:30px;
     margin:0 0 10px 0;
+    font-family:"RalewayBold";
 }
 
 /* BANNER */
@@ -128,6 +129,7 @@ section.banner div.wrapper-slider div.slider div.text-slider {
 section.banner div.wrapper-slider div.slider div.text-slider h2 {
     margin:0;
     font-size:60px;
+    font-family:"RalewayBold" !important;
 }
 
 section.banner div.wrapper-slider div.slider div.text-slider p {
@@ -287,6 +289,7 @@ div.flex p {
     line-height:40px;
     font-size:22px;
     margin:0;
+    font-family:"RalewayLight" !important;
 }
 
 /* JOIN US */
@@ -311,6 +314,7 @@ div.container-text-join h3.text-join {
     margin-bottom:10px;
     font-size:30px;
     text-transform:uppercase;
+    font-family:"RalewayBold";
 }
 
 div.container-text-join p.paragraph-join {
@@ -343,7 +347,7 @@ button.btn-ghost:hover {
 }
 
 div.overlay-gradient {
-    background:-webkit-linear-gradient(left top, rgba(67,21,127, .9), rgba(134,43,255, .9));
+    background:linear-gradient(120deg, rgba(67,21,127, .9), rgba(134,43,255, .9));
     width:100%;
     height:100%;
     top:0;
@@ -391,6 +395,7 @@ div.front > div.text-front {
     font-size:18px;
     background:#6520bf;
     padding:10px 14px;
+    font-family:"RalewayBold";
 }
 
 div.front img.image-gallery {
@@ -562,12 +567,11 @@ div.wrapper-button-nav span:after {
 
 /* ANIMATE TO X*/
 div.wrapper-button-nav span {
-    transition: background 0s .3s;
+    transition: background .3s;
 }
 div.wrapper-button-nav span:before,
 div.wrapper-button-nav span:after {
     transition-duration: .3s, .3s;
-    transition-delay: .3s, 0s;
 }
 
 div.wrapper-button-nav:before {
@@ -594,7 +598,6 @@ div.wrapper-button-nav.active span:after {
 
 div.wrapper-button-nav.active span:before,
 div.wrapper-button-nav.active span:after {
-    transition-delay: 0s .3s;
     width:100%;
 }
 

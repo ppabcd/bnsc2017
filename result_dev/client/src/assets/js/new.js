@@ -2,7 +2,7 @@ class Background {
 
 	constructor(imgsrc, speed, cw) {
 		this.image = new Image();
-		this.image.src = "/static/image-dragon/background/" + imgsrc;
+		this.image.src = "static/image-dragon/background/" + imgsrc;
 		this.imgsrc = imgsrc;
 
 		this.width = 800;
@@ -44,7 +44,7 @@ class Dragon {
 
 	constructor() {
 		this.image = new Image();
-		this.image.src = "/static/image-dragon/dragon.png";
+		this.image.src = "static/image-dragon/dragon.png";
 
 		this.x = 40;
 		this.y = 40;
@@ -111,7 +111,7 @@ class Coin {
 
 	constructor(x, y) {
 		this.image = new Image();
-		this.image.src = "/static/image-dragon/spinning_coin_gold.png";
+		this.image.src = "static/image-dragon/spinning_coin_gold.png";
 
 		this.x = x + 1200;
 		this.y = y + 120;
@@ -338,11 +338,11 @@ class Game {
 	// obstacles
 	generateObstacles() {
 		if(this.miliseconds % 3000 === 0) {
-			this.obstacles.push(new Obstacle(1200, 0, "/static/image-dragon/obstacle/obs_top_B.png"));
-			this.obstacles.push(new Obstacle(900, 250, "/static/image-dragon/obstacle/obs_btm_B.png"));
+			this.obstacles.push(new Obstacle(1200, 0, "static/image-dragon/obstacle/obs_top_B.png"));
+			this.obstacles.push(new Obstacle(900, 250, "static/image-dragon/obstacle/obs_btm_B.png"));
 
-			this.obstacles.push(new Obstacle(1800, 0, "/static/image-dragon/obstacle/obs_top_B.png"));
-			this.obstacles.push(new Obstacle(1500, 250, "/static/image-dragon/obstacle/obs_btm_B.png"));
+			this.obstacles.push(new Obstacle(1800, 0, "static/image-dragon/obstacle/obs_top_B.png"));
+			this.obstacles.push(new Obstacle(1500, 250, "static/image-dragon/obstacle/obs_btm_B.png"));
 		}
 	}
 

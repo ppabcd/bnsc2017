@@ -182,3 +182,17 @@ div.modal.active {
 div.modal.active div.container-modal {
     transform:translateY(0);
 }
+
+/* ALERT */
+div.alert {
+    background:rgba(255, 56, 99, .3);
+    border:1px solid rgba(255, 56, 99, .3);
+    color:#ff3860;
+    padding:8px 12px;
+    margin-bottom:10px;
+}
+
+div.alert span {
+    float:right;
+    cursor:pointer;
+}

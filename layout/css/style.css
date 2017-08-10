@@ -29,9 +29,12 @@ div#sidebar ul {
     min-width:300px;
 }
 
+div#sidebar ul li:first-child {
+    border-top:1px solid #7A27E5;
+}
+
 div#sidebar ul li {
     color:white;
-    border-bottom:1px solid #aaa;
     padding:20px 0 20px 20px;
     font-size:18px;
     transition:all .4s;
@@ -610,16 +613,20 @@ div.content-nav {
 }
 
 div.content-nav.active {
-    height:160px;
+    height:145px;
 }
 
 div.content-nav ul {
     padding:0;
     list-style:none;
+    margin-bottom:0;
+}
+
+div.content-nav ul li:first-child {
+    border-top:1px solid #7A27E5;   
 }
 
 div.content-nav ul li {
-    border-bottom:1px solid white;
     padding:20px 0;
     padding-left:20px;
 }
@@ -627,4 +634,68 @@ div.content-nav ul li {
 div.content-nav ul li i {
     font-size:20px;
     width:30px;
+}
+
+/* SCROLLING ANIMATION */
+div.container-wrapper-image {
+    animation-duration:1s;
+}
+
+div.container-image-3 {
+    animation-delay:125ms;
+}
+
+div.container-image-5 {
+    animation-delay:250ms;
+}
+
+div.container-image-2 {
+    animation-delay:375ms;
+}
+
+div.container-image-4 {
+    animation-delay:500ms;
+}
+
+div.container-image-6 {
+    animation-delay:625ms;
+}
+
+@keyframes jello {
+    from, 11.1%, to {
+        transform: none;
+    }
+
+    22.2% {
+        transform: skewX(-12.5deg) skewY(-12.5deg);
+    }
+
+    33.3% {
+        transform: skewX(6.25deg) skewY(6.25deg);
+    }
+
+    44.4% {
+        transform: skewX(-3.125deg) skewY(-3.125deg);
+    }
+
+    55.5% {
+        transform: skewX(1.5625deg) skewY(1.5625deg);
+    }
+
+    66.6% {
+        transform: skewX(-0.78125deg) skewY(-0.78125deg);
+    }
+
+    77.7% {
+        transform: skewX(0.390625deg) skewY(0.390625deg);
+    }
+
+    88.8% {
+        transform: skewX(-0.1953125deg) skewY(-0.1953125deg);
+    }
+}
+
+.jello {
+    animation-name: jello;
+    transform-origin: center;
 }

@@ -59,6 +59,8 @@
                     </button>
                 </div>
             </form>
+
+            <loading v-if="loading"></loading>
         </div>
 
         <div class="close" @click="closeModal">Close</div>
@@ -68,8 +70,12 @@
 <script>
     import registerService from '@/services/register.service';
     import captchaService from '@/services/captcha.service';
+    import Loading from './../Loading.vue';
 
     export default {
+        components: {
+            Loading
+        },
         data() {
             return {
                 form: {
@@ -87,7 +93,8 @@
                 },
                 captchaData: '',
                 error: false,
-                errorMsg: ''
+                errorMsg: '',
+                loading: false
             }
         },
         created() {
@@ -110,11 +117,16 @@
                 reader.readAsDataURL(file);
             },
             register() {
+                this.loading = true;
                 this.error = false;
                 registerService.register(this.form)
                     .then((response) => {
                         if(response.data.data.token) {
                             localStorage.setItem("token", response.data.data.token);
+
+                            this.reset();
+
+                            this.loading = false;
 
                             this.$emit('registerSuccess');
                         }
@@ -128,6 +140,7 @@
 
                         this.error = true;
 
+                        this.loading = false;
                     });
             },
             getCaptcha() {
@@ -172,7 +185,24 @@
 
                 ctx.restore();
             },
+            reset() {
+                this.form.name = '';
+                this.form.username = '';
+                this.form.email = '';
+                this.form.password = '';
+                this.form.captcha.captcha = '';
+                this.form.captcha.data = '';
+                this.form.phone_number = '';
+                this.form.date_of_birth = '';
+                this.form.profile_picture = '';
+                this.captchaData = { };
+                this.error = false;
+                this.errorMsg = false;
+
+                this.getCaptcha();
+            },
             closeModal() {
+                this.reset();
                 this.$emit('closeModal');
             }
         }

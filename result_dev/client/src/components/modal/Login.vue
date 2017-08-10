@@ -34,6 +34,8 @@
                     </button>
                 </div>
             </form>
+
+            <loading v-if="loading"></loading>
         </div>
 
         <div class="close" @click="closeModal">Close</div>
@@ -44,8 +46,12 @@
     import authService from '@/services/auth.service';
 
     import captchaService from '@/services/captcha.service';
+    import Loading from './../Loading.vue';
 
     export default {
+        components: {
+            Loading
+        },
         data() {
             return {
                 form: {
@@ -59,7 +65,8 @@
                 captchaData: { },
                 error: false,
                 errorMsg: '',
-                errorClass: ''
+                errorClass: '',
+                loading: false
             }
         },
         created() {
@@ -67,6 +74,7 @@
         },
         methods: {
             login() {
+                this.loading = true;
                 this.error = false;
                 authService.login(this.form)
                     .then((response) => {
@@ -74,6 +82,8 @@
                             localStorage.setItem("token", response.data.data.token);
 
                             this.reset();
+
+                            this.loading = false;
 
                             this.$emit('loginSuccess');
                         }
@@ -88,6 +98,7 @@
                         }
 
                         this.error = true;
+                        this.loading = false;
                     });
             },
             reset() {
@@ -144,6 +155,7 @@
                 ctx.restore();
             },
             closeModal() {
+                this.reset();
                 this.$emit('closeModal');
             }
         }

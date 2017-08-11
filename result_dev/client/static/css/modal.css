@@ -7,10 +7,9 @@ div.modal {
     height:100%;
     background:rgba(255, 255, 255, .8);
     z-index:1000;
-    display:flex;
-    justify-content:center;
-    align-items:center;
     transition:all .5s;
+    overflow:auto;
+    padding:20px 0;
 }
 
 div.modal div.close {
@@ -35,6 +34,11 @@ div.modal div.container-modal {
     padding:30px;
     transform:translateY(1000px);
     transition:all .8s cubic-bezier(.3, 1.1, .2, 1.2);
+    margin:0 auto;
+}
+
+div.modal div.container-register {
+    width:500px;
 }
 
 div.modal div.container-register div.container-logo {

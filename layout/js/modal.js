@@ -1,10 +1,12 @@
 // modal actions
 $("#sidebar ul li.register").onclick = () => {
     $(".modal.modal-register").classList.add("active");
+    $("body").classList.add("no-scroll");
 };
 
 $("button.join-us").onclick = () => {
     $(".modal.modal-register").classList.add("active");
+    $("body").classList.add("no-scroll");
 };
 
 $("#sidebar ul li.login").onclick = () => {
@@ -20,5 +22,6 @@ document.querySelectorAll(".play-game").forEach((e) => {
 document.querySelectorAll("div.close").forEach((e) => {
     e.onclick = () => {
         $(".modal.active").classList.remove("active");
+    	$("body").classList.remove("no-scroll");
     };
 });

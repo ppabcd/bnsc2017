@@ -7,10 +7,9 @@ div.modal {
     height:100%;
     background:rgba(255, 255, 255, .8);
     z-index:1000;
-    display:flex;
-    justify-content:center;
-    align-items:center;
     transition:all .5s;
+    overflow:auto;
+    padding:20px 0;
 }
 
 div.modal div.close {
@@ -30,6 +29,7 @@ div.modal div.close:hover {
 }
 
 div.modal div.container-modal {
+    margin:0 auto;
     box-shadow:0 3px 6px rgba(0, 0, 0, .16), 0 3px 6px rgba(0, 0, 0, .23);
     background:white;
     padding:30px;
@@ -38,6 +38,9 @@ div.modal div.container-modal {
 }
 
 /* MODAL REGISTER */
+div.modal div.container-register {
+    width:500px;
+}
 div.modal div.container-register div.container-logo {
     margin:0;
     text-align:center;

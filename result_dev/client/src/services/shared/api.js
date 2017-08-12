@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var axios_1 = require("axios");
 var config = {
+    // baseURL: 'https://yh.ashiwawa.com/api',
     baseURL: 'http://localhost:8000/api',
     timeout: 2000
 };

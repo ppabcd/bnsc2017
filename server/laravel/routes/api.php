@@ -13,12 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::group(['prefix' => 'users', 'middleware' => 'jwt.auth'], function() {
-    Route::get('{id}', 'UserController@index');
     Route::patch('{id}', 'UserController@update');
 });
 Route::get('profile', 'ProfileController@index');
@@ -37,4 +32,3 @@ Route::group(['prefix' => 'score', 'middleware' => 'jwt.auth'], function() {
 
 // captcha
 Route::get('captcha', 'CaptchaController@index');
-Route::post('captcha/validate', 'CaptchaController@validate');

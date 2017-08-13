@@ -64,6 +64,7 @@
             game: {
                 handler: function(val, oldVal) {
                     if(val.lost) this.saveScore();
+                    if(val.close) this.closeModal();
                 },
                 deep: true
             },
@@ -122,10 +123,10 @@
         font-size:24px;
         margin-bottom:10px;
     }
+    
     div.modal div.container-game {
         padding:0;
         display:flex;
-        width:1100px;
         min-height:500px;
     }
 
@@ -135,6 +136,7 @@
         display:flex;
         justify-content:center;
         align-items:center;
+        min-height:300px;
     }
 
     div.modal div.container-game div.wrapper-game button.btn-play {

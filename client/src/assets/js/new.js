@@ -196,6 +196,8 @@ class Game {
 		this.started = false;
 
 		this.lost = false;
+
+		this.close = false;
 	}
 
 	setCanvas(canvas) {
@@ -420,6 +422,7 @@ class Game {
 		this.obstacles = [];
 		this.started = true;
 		this.lost = false;
+		this.close = false;
 	}
 }
 
@@ -448,5 +451,14 @@ function play() {
 		setTimeout(play, 20);
 	}
 }
+
+window.onkeydown = (e) => {
+	e.preventDefault();
+
+	if(e.keyCode == 27) {
+		console.log('test');
+		game.close = true;
+	}
+};
 
 export { game, startGame, play }

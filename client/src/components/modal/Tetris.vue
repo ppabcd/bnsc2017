@@ -106,7 +106,6 @@
     div.modal div.container-game {
         padding:0;
         display:flex;
-        width:1100px;
         min-height:500px;
     }
 

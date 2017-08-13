@@ -643,6 +643,11 @@ div.content-nav ul li i {
     width:30px;
 }
 
+div.content-nav ul li:hover {
+    background:rgba(0, 0, 0, .4);
+    cursor:pointer;
+}
+
 /* SCROLLING ANIMATION */
 div.container-wrapper-image {
     animation-duration:1s;

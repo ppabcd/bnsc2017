@@ -1,8 +1,8 @@
-@media screen and (min-width:768px) {
+/*@media screen and (min-width:768px) {
     div.modal div.container-game {
         flex-flow:row wrap;
     }
-}
+}*/
 
 @media screen and (max-width:992px) {
     p.copyright {
@@ -15,5 +15,10 @@
 
     div.modal div.container-game div.wrapper-game {
         height:400px;
+    }
+
+    div.wrapper-navigation div.prev {
+        left:0;
+        padding-left:60px;
     }
 }

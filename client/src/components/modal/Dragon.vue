@@ -162,6 +162,8 @@
     div.modal div.container-game div.wrapper-game canvas {
         background:#ccc;
         /*display:none;*/
+        width:100%;
+        height:100%;
     }
 
     div.modal div.container-game div.board-score {

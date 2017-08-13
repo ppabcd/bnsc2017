@@ -1,8 +1,8 @@
-@media screen and (min-width:768px) {
+/*@media screen and (min-width:768px) {
     div.modal div.container-game {
         flex-flow:row wrap;
     }
-}
+}*/
 
 @media screen and (max-width:992px) {
     p.copyright {

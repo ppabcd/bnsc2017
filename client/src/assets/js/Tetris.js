@@ -152,7 +152,7 @@ class Tetris {
 		});
 
 		if(!this.check()) {
-			game.loseGame();
+			gameTetris.loseGame();
 		}
 	}
 
@@ -244,9 +244,9 @@ class Tetris {
 	}
 
 	speedUp() {
-		game.clear();
-		game.intervalTime *= 0.85;
-		game.startUpdate();
+		gameTetris.clear();
+		gameTetris.intervalTime *= 0.85;
+		gameTetris.startUpdate();
 	}
 
 	draw(ctx) {
@@ -343,6 +343,8 @@ class Game {
         this.tetris = new Tetris();
 
         this.lost = false;
+
+		this.close = false;
     }
 
     setCanvas(canvas) {
@@ -418,39 +420,47 @@ class Game {
 
 // control
 window.onkeydown = (e) => {
-	game.clear();
+	gameTetris.clear();
 
-	if(!game.lost) {
+	if(e.keyCode === 37 || e.keyCode === 38 || e.keyCode === 39 || e.keyCode === 40) {
+		e.preventDefault();
+	}
+
+	if(!gameTetris.lost) {
         if(e.keyCode === 38) {
             e.preventDefault();
-            game.tetris.rotate();
+            gameTetris.tetris.rotate();
         }
 
         if(e.keyCode === 37 || e.keyCode === 39) {
             e.preventDefault();
             let direction = -(38 - e.keyCode);
-            game.move(direction);
+            gameTetris.move(direction);
         }
 
         if(e.keyCode === 40) {
             e.preventDefault();
-            game.update();
+            gameTetris.update();
         }
     }
+
+	if(e.keyCode == 27) {
+		gameTetris.close = true;
+	}
 
 };
 
 window.onkeyup = (e) => {
 
-    if(!game.lost) {
+    if(!gameTetris.lost) {
         if(e.keyCode === 38 || e.keyCode === 37 || e.keyCode === 39 || e.keyCode === 40) {
             e.preventDefault();
-            game.startUpdate();
+            gameTetris.startUpdate();
         }
     }
 };
 
 //  ============================== MAIN ==============================
-const game = new Game();
+const gameTetris = new Game();
 
-export { game };
+export { gameTetris };

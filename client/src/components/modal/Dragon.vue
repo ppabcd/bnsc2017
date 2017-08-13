@@ -43,7 +43,7 @@
                 type: 'dragon',
                 highscores: [],
                 playing: false,
-                game: dragon.game,
+                game: dragon.gameDragon,
                 over: false
             }
         },
@@ -53,11 +53,17 @@
         mounted() {
             let canvas = document.getElementById("canvas-dragon");
 
-            dragon.game.setCanvas(canvas);
-            dragon.game.setBackground();
+            dragon.gameDragon.setCanvas(canvas);
+            dragon.gameDragon.setBackground();
 
             canvas.addEventListener("click", (e) => {
-                dragon.game.dragon.goUp();
+                dragon.gameDragon.dragon.goUp();
+            });
+
+            window.addEventListener("keydown", (e) => {
+                if(e.keyCode == 27) {
+                    this.game.close = true;
+                }
             });
         },
         watch: {
@@ -98,6 +104,7 @@
 
                 this.playing = false;
                 this.over = false;
+                this.game.close = false;
 
                 this.$emit('closeModal');
             },
@@ -159,7 +166,7 @@
         background:#2C1458;
     }
 
-    div.modal div.container-game div.wrapper-game canvas {
+    div.modal div.container-game div.wrapper-game canvas#canvas-dragon {
         background:#ccc;
         /*display:none;*/
         width:100%;

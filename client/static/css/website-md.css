@@ -6,11 +6,6 @@
     section.gallery div.row > div > div.container-wrapper-image:last-child {
         margin-bottom:0;
     }
-
-    div.wrapper-navigation div.prev {
-        left:0;
-        padding-left:60px;
-    }
 }
 
 @media screen and (min-width:993px) {

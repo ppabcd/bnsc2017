@@ -72,6 +72,13 @@
         created() {
             this.getCaptcha();
         },
+        mounted() {
+            window.addEventListener("keydown", (e) => {
+                if(e.keyCode == 27) {
+                    this.closeModal();
+                }
+            });
+        },
         methods: {
             login() {
                 this.loading = true;

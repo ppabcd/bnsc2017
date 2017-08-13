@@ -16,4 +16,9 @@
     div.modal div.container-game div.wrapper-game {
         height:400px;
     }
+
+    div.wrapper-navigation div.prev {
+        left:0;
+        padding-left:60px;
+    }
 }

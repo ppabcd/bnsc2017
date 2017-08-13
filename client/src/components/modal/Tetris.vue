@@ -44,7 +44,7 @@
                 highscores: [],
                 playing: false,
                 over: false,
-                game: game.game
+                game: game.gameTetris
             }
         },
         created() {
@@ -53,12 +53,13 @@
         mounted() {
             let canvas = document.getElementById("canvas");
 
-            game.game.setCanvas(canvas);
+            game.gameTetris.setCanvas(canvas);
         },
         watch: {
             game: {
                 handler: function(val, oldVal) {
                     if(val.lost) this.saveScore();
+                    if(val.close) this.closeModal();
                 },
                 deep: true
             },
@@ -77,6 +78,7 @@
                 this.game.clear();
                 this.playing = false;
                 this.over = false;
+                this.game.close = false;
 
                 this.$emit('closeModal');
             },
@@ -84,7 +86,7 @@
                 this.playing = true;
                 this.over = false;
 
-                game.game.init();
+                game.gameTetris.init();
             },
             saveScore() {
                 let data = {

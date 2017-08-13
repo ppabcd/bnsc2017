@@ -100,6 +100,13 @@
         created() {
             this.getCaptcha();
         },
+        mounted() {
+            window.addEventListener("keydown", (e) => {
+                if(e.keyCode == 27) {
+                    this.closeModal();
+                }
+            });
+        },
         methods: {
             onFileChange(e) {
                 let files = e.target.files || e.dataTransfer.files;

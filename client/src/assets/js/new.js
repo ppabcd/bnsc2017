@@ -187,7 +187,7 @@ class Game {
 		this.lives = 3;
 		this.score = 0;
 
-		this.loop = true;
+		this.loop = false;
 		this.miliseconds = 0;
 
 		this.coins = [];
@@ -428,37 +428,28 @@ class Game {
 
 let speed = 10;
 
-const game = new Game();
+const gameDragon = new Game();
 
 // functional
 function startGame() {
-	if(!game.started) {
+	if(!gameDragon.started) {
 		setInterval(function() {
 			speed += 2;
 		}, 4000);
 
-		game.reset();
+		gameDragon.reset();
 		play();
 	}
 }
 
 function play() {
-	game.update();
-	game.draw();
+	gameDragon.update();
+	gameDragon.draw();
 
-	if(game.loop) {
-		game.miliseconds += 20;
+	if(gameDragon.loop) {
+		gameDragon.miliseconds += 20;
 		setTimeout(play, 20);
 	}
 }
 
-window.onkeydown = (e) => {
-	e.preventDefault();
-
-	if(e.keyCode == 27) {
-		console.log('test');
-		game.close = true;
-	}
-};
-
-export { game, startGame, play }
+export { gameDragon, startGame, play }

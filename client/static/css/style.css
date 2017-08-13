@@ -17,7 +17,7 @@ div#sidebar {
     top:0;
     left:0;
     background:#6520bf;
-    z-index:99;
+    z-index:1000;
     transition:all .75s cubic-bezier(.3, 1.2, .2, 1);
     overflow:hidden;
     padding:40px 0;
@@ -65,17 +65,17 @@ div#sidebar div.container-logo img {
     height:52px;
 }
 
-div#sidebar li.container-user {
+div#sidebar li.container-user, div.content-nav li.container-user {
     display:flex;
     align-items:center;
 }
 
-div#sidebar li.container-user span {
+div#sidebar li.container-user span, div.content-nav li.container-user span {
     position:relative;
     top:0;
 }
 
-div#sidebar div.wrapper-image-user{
+div#sidebar div.wrapper-image-user, div.content-nav div.wrapper-image-user{
     width:52px;
     height:52px;
     border-radius:50%;
@@ -85,7 +85,7 @@ div#sidebar div.wrapper-image-user{
     margin-right:10px;
 }
 
-div#sidebar div.wrapper-image-user img {
+div#sidebar div.wrapper-image-user img, div.content-nav div.wrapper-image-user img {
     width:100%;
     height:100%;
     object-fit:cover;
@@ -641,7 +641,7 @@ div.content-nav {
 }
 
 div.content-nav.active {
-    height:145px;
+    height:160px;
 }
 
 div.content-nav ul {
@@ -657,11 +657,22 @@ div.content-nav ul li:first-child {
 div.content-nav ul li {
     padding:20px 0;
     padding-left:20px;
+    cursor:pointer;
 }
 
 div.content-nav ul li i {
     font-size:20px;
     width:30px;
+}
+
+div.content-nav ul li:hover {
+    background:rgba(0, 0, 0, .4);
+    cursor:pointer;
+}
+
+div.content-nav ul li.container-user {
+    padding:10px 0;
+    padding-left:20px;
 }
 
 /* SCROLLING ANIMATION */

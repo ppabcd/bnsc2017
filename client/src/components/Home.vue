@@ -45,15 +45,31 @@
                 </div>
             </div>
 
-            <div class="content-nav" data-state="close">
+            <div class="content-nav" data-state="close" v-if="!loggedIn">
                 <ul>
-                    <li class="register">
+                    <li class="register" @click="registerActive = true">
                         <i class="fa fa-user-plus"></i>
                         <span>Register</span>
                     </li>
-                    <li class="login">
+                    <li class="login" @click="loginActive = true">
                         <i class="fa fa-sign-in"></i>
                         <span>Log In</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="content-nav" data-state="close" v-else>
+                <ul>
+                    <li class="container-user">
+                        <div class="wrapper-image-user">
+                            <img :src="image" />
+                        </div>
+
+                        <span>{{ username }}</span>
+                    </li>
+                    <li @click="logout">
+                        <i class="fa fa-sign-out"></i>
+                        <span>Log Out</span>
                     </li>
                 </ul>
             </div>
@@ -125,7 +141,7 @@
                 </div>
             </section>
 
-            <section class="join section-content">
+            <section class="join section-content" v-show="!loggedIn">
                 <div class="container">
                     <div class="row">
                         <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">

@@ -53,7 +53,7 @@ class Game {
     }
 
     move(direction) {
-        this.tetris.move(direction);
+        return this.tetris.move(direction);
     }
 
     goDown() {

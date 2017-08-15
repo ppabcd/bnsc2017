@@ -303,6 +303,8 @@ class Tetris {
 				y: this.currentTetromino.potentialPos.y
 			};
 		}
+
+		return flag;
 	}
 
 	rotate() {
@@ -389,7 +391,7 @@ class Game {
     }
 
     move(direction) {
-        this.tetris.move(direction);
+        return this.tetris.move(direction);
     }
 
     goDown() {
@@ -420,7 +422,7 @@ class Game {
 
 // control
 window.onkeydown = (e) => {
-	gameTetris.clear();
+	// gameTetris.clear();
 
 	if(e.keyCode === 37 || e.keyCode === 38 || e.keyCode === 39 || e.keyCode === 40) {
 		e.preventDefault();
@@ -435,7 +437,9 @@ window.onkeydown = (e) => {
         if(e.keyCode === 37 || e.keyCode === 39) {
             e.preventDefault();
             let direction = -(38 - e.keyCode);
-            gameTetris.move(direction);
+            if(gameTetris.move(direction)) {
+                gameTetris.update();
+            }
         }
 
         if(e.keyCode === 40) {

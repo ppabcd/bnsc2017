@@ -224,6 +224,8 @@ class Tetris {
 				y: this.currentTetromino.potentialPos.y
 			};
 		}
+
+		return flag;
 	}
 
 	rotate() {

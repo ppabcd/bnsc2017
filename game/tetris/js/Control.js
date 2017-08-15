@@ -1,7 +1,7 @@
 let isKeyDown = false, isKeyPress = false;
 
 window.onkeydown = (e) => {
-	game.clear();
+	// game.clear();
 
 	if(!game.lost) {
         if(e.keyCode === 38) {
@@ -12,7 +12,9 @@ window.onkeydown = (e) => {
         if(e.keyCode === 37 || e.keyCode === 39) {
             e.preventDefault();
             let direction = -(38 - e.keyCode);
-            game.move(direction);
+            if(game.move(direction)) {
+                game.update();
+            }
         }
 
         if(e.keyCode === 40) {
@@ -28,7 +30,7 @@ window.onkeyup = (e) => {
     if(!game.lost) {
         if(e.keyCode === 38 || e.keyCode === 37 || e.keyCode === 39 || e.keyCode === 40) {
             e.preventDefault();
-            game.startUpdate();
+            // game.startUpdate();
         }
     }
 };
